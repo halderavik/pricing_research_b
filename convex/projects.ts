@@ -54,3 +54,15 @@ export const getInternal = internalQuery({
     return await ctx.db.get(args.projectId);
   },
 });
+
+export const remove = mutation({
+  args: { projectId: v.id("projects") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+    const project = await ctx.db.get(args.projectId);
+    if (!project || project.userId !== userId) throw new Error("Not authorized");
+    await ctx.db.delete(args.projectId);
+    return true;
+  },
+});

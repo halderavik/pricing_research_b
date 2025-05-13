@@ -1,8 +1,21 @@
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { toast } from "sonner";
+import { Id } from "../../convex/_generated/dataModel";
 
 export function ProjectList() {
   const projects = useQuery(api.projects.list);
+  const removeProject = useMutation(api.projects.remove);
+
+  const handleDelete = async (projectId: Id<'projects'>) => {
+    if (!window.confirm("Are you sure you want to delete this project? This action cannot be undone.")) return;
+    try {
+      await removeProject({ projectId });
+      toast.success("Project deleted");
+    } catch (e) {
+      toast.error("Failed to delete project");
+    }
+  };
 
   if (!projects) {
     return <div>Loading...</div>;
@@ -29,6 +42,12 @@ export function ProjectList() {
               {project.analysisType}
             </span>
           </div>
+          <button
+            onClick={() => handleDelete(project._id as Id<'projects'>)}
+            className="mt-4 text-xs text-red-600 hover:underline"
+          >
+            Delete
+          </button>
         </div>
       ))}
     </div>
