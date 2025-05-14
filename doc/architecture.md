@@ -61,4 +61,14 @@ flowchart TD
 
 ## Extensibility
 - The ProjectList can be extended to support project editing, archiving, or sharing.
-- The backend is modular, with each resource (projects, analysis, files) in its own file. 
+- The backend is modular, with each resource (projects, analysis, files) in its own file.
+
+## Backend Data Model & Validation
+- The Convex backend strictly enforces schema validation for all analysis results.
+- Van Westendorp results include:
+  - `data`: Price sensitivity curve data
+  - `metrics`: OPP, IDP, PMC, IPD
+  - `range`: Acceptable price range
+  - `optimal`: The optimal price point (OPP)
+- Any extra fields not defined in the schema will be rejected by the backend.
+- The analysis logic is modular and schema-driven. 

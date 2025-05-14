@@ -77,3 +77,13 @@ The application uses Convex for real-time data management and authentication. Ke
 The application is configured for easy deployment through Convex. The current deployment is connected to [`limitless-caiman-218`](https://dashboard.convex.dev/d/limitless-caiman-218).
 
 For deployment instructions, refer to the [Convex Deployment Documentation](https://docs.convex.dev/production/).
+
+## Backend Data Model & Analysis Logic
+- The backend (Convex) strictly enforces schema validation for all analysis results.
+- Van Westendorp analysis results include:
+  - `data`: Price sensitivity curve data
+  - `metrics`: Key points (OPP, IDP, PMC, IPD)
+  - `range`: Acceptable price range
+  - `optimal`: The optimal price point (OPP)
+- Any extra fields not defined in the schema will be rejected by the backend.
+- Gabor-Granger analysis is unchanged.
